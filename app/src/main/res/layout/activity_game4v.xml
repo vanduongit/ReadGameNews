@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:fitsSystemWindows="true"
+    tools:context="com.android.dt.readgamenews.Game4v"
+    android:id="@+id/drawer_layout">
+    <!-- main content -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/main_content"
+        android:layout_height="match_parent">
+
+    </RelativeLayout>
+    <!--Drawer pane -->
+    <RelativeLayout
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:id="@+id/drawer_pane"
+        android:layout_gravity="start">
+        <!--profile box -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:id="@+id/profile_box"
+            android:background="#000000"
+            android:gravity="center_vertical">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/icon"
+                android:layout_marginLeft="10dp"
+                android:background="@mipmap/ic_launcher" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/icon"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/namegame4"
+                    android:textColor="#fff"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:text="Game4v"
+                    android:gravity="center_vertical" />
+            </LinearLayout>
+        </RelativeLayout>
+        <!-- Nav ListItem -->
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/nav_list"
+            android:layout_below="@+id/profile_box"
+            android:background="#fff"
+            android:choiceMode="singleChoice">
+
+        </ListView>
+    </RelativeLayout>
+
+</android.support.v4.widget.DrawerLayout>

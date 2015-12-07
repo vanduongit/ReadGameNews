@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">ReadGameNews</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_game4v">Game4v</string>
+    <string name="drawer_opened">Drawer Opened</string>
+    <string name="drawer_closed">Drawer Closed</string>
 </resources>
