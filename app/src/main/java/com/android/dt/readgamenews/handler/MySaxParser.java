@@ -36,6 +36,7 @@ public class MySaxParser {
             URL url1=new URL(url);
             HttpURLConnection httpurl=(HttpURLConnection)url1.openConnection();
             InputSource is=new InputSource(url1.openStream());
+            is.setEncoding("UTF-8");
             xmlreader.parse(is);
             ds=saxHandler.getitems();
 
