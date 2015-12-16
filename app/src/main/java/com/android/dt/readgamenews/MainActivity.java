@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ds_home=new ArrayList<HashMap<String,String>>();
+        ds_home=new ArrayList<HomePage>();
         lv=(ListView)findViewById(R.id.listView2);
         new xulygetallhome().execute();
 
