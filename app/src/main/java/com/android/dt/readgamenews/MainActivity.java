@@ -24,14 +24,14 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
+import com.android.dt.readgamenews.HomePage;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MainActivity extends Activity {
 
     ListView lv;
-    ArrayList<HashMap<String,String>>ds_home;
+    List<HomePage> ds_home;
     ArrayList<Item> items=new ArrayList<Item>();
     MySaxParser mysaxparser;
     String chuoi="";
@@ -82,22 +82,20 @@ public class MainActivity extends Activity {
                 if(Integer.parseInt(thanhcong)==1)
                 {
                     JSONArray jsonarray=jsonobject.getJSONArray("sanpham");
+                    HomePage homePage;
                     for(int i=0;i<jsonarray.length();i++)
                     {
                         JSONObject item=jsonarray.getJSONObject(i);
-                        String id=item.getString("home_page_id");
-                        String name=item.getString("home_page_name");
-                        String rss=item.getString("home_page_rss");
-                        HashMap<String,String> hm=new HashMap<String,String>();
-                        hm.put("id",id);
-                        hm.put("name",name);
-                        hm.put("rss",rss);
-                        ds_home.add(hm);
+                        homePage = new HomePage();
+                        homePage.setId(item.getString("home_page_id"));
+                        homePage.setName(item.getString("home_page_name"));
+                        homePage.setRss(item.getString("home_page_rss"));
+                        ds_home.add(homePage);
                     }
                 }
-                for(int i=0;i<ds_home.size();i++)
+                for(HomePage homePage : ds_home)
                 {
-                    items=(ArrayList<Item>)mysaxparser.xmlParser(ds_home.get(i).get("rss"));
+                    items.addAll((ArrayList<Item>)mysaxparser.xmlParser(homePage.getRss()));
                 }
                 for(int i=0;i<items.size();i++)
                 {
