@@ -24,25 +24,23 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
+import com.android.dt.readgamenews.HomePage;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class MainActivity extends Activity {
 
     ListView lv;
     List<HomePage> ds_home;
-    List<Item> items = new ArrayList<Item>();
+    ArrayList<Item> items=new ArrayList<Item>();
     MySaxParser mysaxparser;
-    String chuoi = "";
-
+    String chuoi="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ds_home = new ArrayList<HomePage>();
-        lv = (ListView) findViewById(R.id.listView2);
+        ds_home=new ArrayList<HomePage>();
+        lv=(ListView)findViewById(R.id.listView2);
         new xulygetallhome().execute();
 
     }
@@ -68,22 +66,26 @@ public class MainActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    class xulygetallhome extends AsyncTask<Void, Void, Void> {
+    class xulygetallhome extends AsyncTask<Void,Void,Void>
+    {
         MyFunctions myfunctions;
+
         @Override
         protected Void doInBackground(Void... params) {
-            String thanhcong = "";
-            mysaxparser = new MySaxParser();
-            try {
-                myfunctions = new MyFunctions(MainActivity.this);
-                JSONObject jsonobject = myfunctions.getAllHomePage();
-                thanhcong = jsonobject.getString("thanhcong");
-                if (Integer.parseInt(thanhcong) == 1) {
-                    JSONArray jsonarray = jsonobject.getJSONArray("sanpham");
+            String thanhcong=null;
+            mysaxparser=new MySaxParser();
+            try
+            {
+               myfunctions=new MyFunctions(MainActivity.this);
+                JSONObject jsonobject=myfunctions.getAllHomePage();
+                thanhcong=jsonobject.getString("thanhcong");
+                if(Integer.parseInt(thanhcong)==1)
+                {
+                    JSONArray jsonarray=jsonobject.getJSONArray("sanpham");
                     HomePage homePage;
-                    for (int i = 0; i < jsonarray.length(); i++) {
-                        JSONObject item = jsonarray.getJSONObject(i);
+                    for(int i=0;i<jsonarray.length();i++)
+                    {
+                        JSONObject item=jsonarray.getJSONObject(i);
                         homePage = new HomePage();
                         homePage.setId(item.getString("home_page_id"));
                         homePage.setName(item.getString("home_page_name"));
@@ -91,14 +93,17 @@ public class MainActivity extends Activity {
                         ds_home.add(homePage);
                     }
                 }
-                for (HomePage homePage : ds_home) {
-                    items.addAll((ArrayList<Item>) mysaxparser.xmlParser(homePage.getRss()));
+                for(HomePage homePage : ds_home)
+                {
+                    items.addAll((ArrayList<Item>)mysaxparser.xmlParser(homePage.getRss()));
                 }
-                for (int i = 0; i < items.size(); i++) {
-                    chuoi += items.get(i).getTitle() + " ";
+                for(int i=0;i<items.size();i++)
+                {
+                    chuoi+=items.get(i).getTitle()+" ";
                 }
-            } catch (Exception e) {
-                Log.e("error", e.getMessage());
+            }catch(Exception e)
+            {
+
             }
             return null;
         }
@@ -106,7 +111,7 @@ public class MainActivity extends Activity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            Log.d("dulieu", chuoi);
+            Log.d("dulieu",chuoi);
             //ListAdapter adapter=new SimpleAdapter(MainActivity.this,ds_home,R.layout.item_list,new String[]{"id","name","rss"},new int[]{R.id.textView,R.id.textView2,R.id.textView3});
             //lv.setAdapter(adapter);
         }
