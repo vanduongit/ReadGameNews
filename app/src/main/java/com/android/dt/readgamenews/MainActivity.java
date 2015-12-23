@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -16,7 +15,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-import com.android.dt.readgamenews.adapter.ViewPagerAdapter;
 import com.android.dt.readgamenews.asytask.MainAsytask;
 import com.android.dt.readgamenews.handler.MySaxParser;
 import com.android.dt.readgamenews.models.HomePage;
@@ -26,14 +24,13 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
+import com.android.dt.readgamenews.HomePage;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class MainActivity extends Activity {
 
-    ViewPager viewpager;
+    ListView lv;
     List<HomePage> ds_home;
     ArrayList<Item> items=new ArrayList<Item>();
     MySaxParser mysaxparser;
@@ -43,7 +40,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ds_home=new ArrayList<HomePage>();
-        viewpager=(ViewPager)findViewById(R.id.viewpager);
+        lv=(ListView)findViewById(R.id.listView2);
         new xulygetallhome().execute();
 
     }
@@ -96,7 +93,14 @@ public class MainActivity extends Activity {
                         ds_home.add(homePage);
                     }
                 }
-
+                for(HomePage homePage : ds_home)
+                {
+                    items.addAll((ArrayList<Item>)mysaxparser.xmlParser(homePage.getRss()));
+                }
+                for(int i=0;i<items.size();i++)
+                {
+                    chuoi+=items.get(i).getTitle()+" ";
+                }
             }catch(Exception e)
             {
 
@@ -107,10 +111,9 @@ public class MainActivity extends Activity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            Log.d("dulieu", chuoi);
-            ViewPagerAdapter adapter=new ViewPagerAdapter(MainActivity.this,ds_home);
-            viewpager.setAdapter(adapter);
-            viewpager.setCurrentItem(0);
+            Log.d("dulieu",chuoi);
+            //ListAdapter adapter=new SimpleAdapter(MainActivity.this,ds_home,R.layout.item_list,new String[]{"id","name","rss"},new int[]{R.id.textView,R.id.textView2,R.id.textView3});
+            //lv.setAdapter(adapter);
         }
     }
 }
